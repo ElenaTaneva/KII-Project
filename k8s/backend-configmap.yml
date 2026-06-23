@@ -4,5 +4,5 @@ metadata:
   name: backend-config
   namespace: todo-app
 data:
-  MONGO_URL: "mongodb://mongo-service:27017/TODO"
+  MONGO_URL: "mongodb://admin:todopass123@mongo-service:27017/TODO?authSource=admin"
   PORT: "5000"
