@@ -10,6 +10,13 @@ spec:
     - host: todo-app.local
       http:
         paths:
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 5000
           - path: /
             pathType: Prefix
             backend:
@@ -17,10 +24,3 @@ spec:
                 name: frontend-service
                 port:
                   number: 80
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: backend-service
-                port:
-                  number: 5000
