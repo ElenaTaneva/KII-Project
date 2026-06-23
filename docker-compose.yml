@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: todo-mongo
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - todo-network
+
+  backend:
+    build: ./todo_backend
+    container_name: todo-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/TODO
+    networks:
+      - todo-network
+
+  frontend:
+    build: ./todo_frontend
+    container_name: todo-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - todo-network
+
+volumes:
+  mongo-data:
+
+networks:
+  todo-network:
+    driver: bridge
